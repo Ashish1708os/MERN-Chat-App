@@ -14,7 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExists) {
     res.status(400);
-    throw new Error("user already exists");
+    throw new Error("user already exists with same email");
   }
 
   const user = await User.create({
@@ -56,4 +56,22 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser };
+// /api/user?QueryName=thisIsQuery
+const allUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        // mongodb operator
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const users = await await User.find(keyword).find({
+    _id: { $ne: req.user._id },
+  });
+  res.send(users);
+});
+
+module.exports = { registerUser, authUser, allUsers };
