@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+
+.App{
+    height: 100vh;
+    display: flex;
+    background: url('./background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* to remove the scroll bar */
+::-webkit-scrollbar{
+    width: 0px;
+}
+
+::-webkit-scrollbar-thumb{
+    background: rgba(136, 136, 136, 0.281);
+}
+
+/* handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
